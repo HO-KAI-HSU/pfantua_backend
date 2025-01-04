@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>台灣藝術大學 藝術學院 管理後台</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- icheck bootstrap -->
+    <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="css/adminlte.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
+
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="javascript:void(0)"">台灣藝術大學 藝術學院 管理後台</a>
+        </div>
+        <!-- /.login-logo -->
+        <div class=" card">
+                <div class="card-body login-card-body">
+                    <p class="login-box-msg">請輸入帳密登入</p>
+
+                    <form>
+                        <div class="input-group mb-3">
+                            <input id="txtUserName" type="text" class="form-control" placeholder="帳號">
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-envelope"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <input id="txtPassword" type="password" class="form-control" placeholder="密碼">
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-lock"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-8">
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-4">
+                                <button id="btnLogin" type="button" class="btn btn-primary btn-block">登入</button>
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                    </form>
+                </div>
+                <!-- /.login-card-body -->
+        </div>
+    </div>
+    <!-- /.login-box -->
+
+    <!-- jQuery -->
+    <script src="plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="js/adminlte.min.js"></script>
+
+    <script src="config.js"></script>
+
+    <script>
+        $.handle = function (d, success, error) {
+            //$.blockUI();
+            d.then(function (result) {
+                if (result && result.Success) {
+                    if (success) {
+                        success(result.Result);
+                    }
+                } else {
+                    if (error) {
+                        error(result);
+                    }
+                }
+            })
+                .fail(function (jqXHR, exception) {
+                    if (error) {
+                        error();
+                    }
+                }).always(function () {
+                    //$.unblockUI();
+                });
+        };
+
+        var api = {
+            login : function (username, password) {
+                return $.post({
+                    type: "POST",
+                    url: config.host + '/pfantua/public/backend/api/login',
+                    data: JSON.stringify({
+                        UserName: username,
+                        Password: password
+                    }),
+                    contentType: "application/json"
+                });
+            }
+        };
+        $(document).ready(function () {
+            $('#btnLogin').click(function () {
+                var username = $('#txtUserName').val();
+                if (!username) {
+                    $('#txtUserName').focus();
+                    return;
+                }
+                var password = $('#txtPassword').val();
+                if (!password) {
+                    $('#txtPassword').focus();
+                    return;
+                }
+                $.handle(api.login(username, password), function (result) {
+                    console.log(result);
+                    if (result.isExpiredPwd) {
+                        var res = window.confirm('您的密碼已經超過三個月未更換，建議修改密碼後再登入');
+                        if (res) {
+                            window.location.href = "./pw.html";
+                            return;
+                        }
+                    } else if (result.isDefaultPwd) {
+                        window.alert('管理員已重設密碼，請先更換您的密碼');
+                        window.location.href = "./pw.html";
+                        return;
+                    }
+                    sessionStorage.setItem('NPMBackendUser', JSON.stringify(result));
+                    window.location.href = "./";
+                }, function (error) {
+                    console.log(error);
+                    if (error.Status == 15) {
+                        alert('密碼輸入錯誤已達三次以上，請15分鐘後再試');
+                    } else {
+                        alert('登入失敗');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
+  <g id="icon_alert_bell" transform="translate(-639 -676)">
+    <circle id="Ellipse_63" data-name="Ellipse 63" cx="14" cy="14" r="14" transform="translate(639 676)" fill="#80b8d4"/>
+    <g id="bell_2_" data-name="bell (2)" transform="translate(645.589 683.006)">
+      <path id="Path_112" data-name="Path 112" d="M357.357,21.9a.583.583,0,0,1-.583-.583,6.081,6.081,0,0,0-1.792-4.328.583.583,0,1,1,.824-.824,7.237,7.237,0,0,1,2.134,5.152.583.583,0,0,1-.583.583Zm0,0" transform="translate(-343.118 -15.558)" fill="#fff"/>
+      <path id="Path_113" data-name="Path 113" d="M.583,21.9A.583.583,0,0,1,0,21.318a7.238,7.238,0,0,1,2.134-5.152.583.583,0,0,1,.824.824,6.08,6.08,0,0,0-1.792,4.328.583.583,0,0,1-.583.583Zm0,0" transform="translate(0 -15.558)" fill="#fff"/>
+      <path id="Path_114" data-name="Path 114" d="M32.627,9.858A3.9,3.9,0,0,1,31.24,6.871V5.246a4.083,4.083,0,0,0-3.5-4.033V.583a.583.583,0,0,0-1.166,0v.63a4.083,4.083,0,0,0-3.5,4.033V6.871a3.908,3.908,0,0,1-1.392,2.992,1.02,1.02,0,0,0,.663,1.795h9.617a1.02,1.02,0,0,0,.658-1.8Zm0,0" transform="translate(-19.749 0)" fill="#fff"/>
+      <path id="Path_115" data-name="Path 115" d="M158.43,449.748A2.189,2.189,0,0,0,160.572,448h-4.283a2.189,2.189,0,0,0,2.141,1.748Zm0,0" transform="translate(-151.019 -435.761)" fill="#fff"/>
+    </g>
+  </g>
+</svg>

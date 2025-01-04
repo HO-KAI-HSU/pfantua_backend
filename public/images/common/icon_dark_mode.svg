@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+  <g id="icon_dark_mode" transform="translate(-9120 -5038)">
+    <path id="monitor-levels" d="M5.259,0a5.258,5.258,0,1,0,5.258,5.257A5.264,5.264,0,0,0,5.259,0Zm0,9.459H5.244v-8.4h.015a4.2,4.2,0,0,1,0,8.4Z" transform="translate(9122.718 5040.75)" fill="#fff"/>
+    <g id="Ellipse_81" data-name="Ellipse 81" transform="translate(9120 5038)" fill="none" stroke="#fff" stroke-width="1">
+      <circle cx="8" cy="8" r="8" stroke="none"/>
+      <circle cx="8" cy="8" r="7.5" fill="none"/>
+    </g>
+  </g>
+</svg>

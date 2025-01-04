@@ -1,0 +1,7 @@
+<svg id="flag_tw" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+  <path id="Path_48" data-name="Path 48" d="M20,10A10,10,0,0,1,0,10L10,0A10,10,0,0,1,20,10Z" fill="#d80027"/>
+  <path id="Path_49" data-name="Path 49" d="M10,10V0A10,10,0,0,0,0,10Z" fill="#0052b4"/>
+  <path id="Path_50" data-name="Path 50" d="M75.557,79.878l-1.221.575.65,1.183-1.326-.254-.168,1.34-.924-.985-.924.985-.168-1.34-1.326.254.65-1.183-1.221-.574L70.8,79.3l-.65-1.183,1.326.254.168-1.34.924.985.924-.985.168,1.34,1.326-.254-.65,1.183Z" transform="translate(-66.861 -74.026)" fill="#f0f0f0"/>
+  <circle id="Ellipse_32" data-name="Ellipse 32" cx="1.861" cy="1.861" r="1.861" transform="translate(3.845 3.991)" fill="#0052b4"/>
+  <path id="Path_51" data-name="Path 51" d="M121.695,126.413a.992.992,0,1,1,.992-.992A.993.993,0,0,1,121.695,126.413Z" transform="translate(-115.988 -119.569)" fill="#f0f0f0"/>
+</svg>

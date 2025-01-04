@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>故宮線上學校管理介面</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- icheck bootstrap -->
+    <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="css/adminlte.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
+
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="javascript:void(0)"">故宮線上學校管理介面</a>
+        </div>
+        <!-- /.login-logo -->
+        <div class=" card">
+                <div class="card-body login-card-body">
+                    <p class="login-box-msg">請修改密碼</p>
+
+                    <form>
+                        <div class="input-group mb-3">
+                            <input id="txtUserName" type="text" class="form-control" placeholder="帳號">
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-envelope"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <input id="txtPassword" type="password" class="form-control" placeholder="舊密碼">
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-lock"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <input id="txtPassword2" type="password" class="form-control" placeholder="新密碼">
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-lock"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <input id="txtPassword3" type="password" class="form-control" placeholder="新密碼確認">
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-lock"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-8">
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-4">
+                                <button id="btnLogin" type="button" class="btn btn-primary btn-block">登入</button>
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                    </form>
+                </div>
+                <!-- /.login-card-body -->
+        </div>
+    </div>
+    <!-- /.login-box -->
+
+    <!-- jQuery -->
+    <script src="plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="js/adminlte.min.js"></script>
+
+    <script src="config.js"></script>
+
+    <script>
+        $.handle = function (d, success, error) {
+            //$.blockUI();
+            d.then(function (result) {
+                if (result && result.Success) {
+                    if (success) {
+                        success(result.Result);
+                    }
+                } else {
+                    if (error) {
+                        error(result);
+                    }
+                }
+            })
+                .fail(function (jqXHR, exception) {
+                    if (error) {
+                        error();
+                    }
+                }).always(function () {
+                    //$.unblockUI();
+                });
+        };
+
+        var api = {
+            changePassword : function (username, password, newPassword) {
+                return $.post({
+                    type: "POST",
+                    url: config.host + '/api/backend/ChangePassword',
+                    data: JSON.stringify({
+                        UserName: username,
+                        OldPassword: password,
+                        NewPassword: newPassword
+                    }),
+                    contentType: "application/json"
+                });
+            }
+        };
+        $(document).ready(function () {
+            $('#btnLogin').click(function () {
+                var username = $('#txtUserName').val();
+                if (!username) {
+                    $('#txtUserName').focus();
+                    return;
+                }
+                var password = $('#txtPassword').val();
+                if (!password) {
+                    $('#txtPassword').focus();
+                    return;
+                }
+                var password2 = $('#txtPassword2').val();
+                if (!password2) {
+                    $('#txtPassword2').focus();
+                    return;
+                }
+                var password3 = $('#txtPassword3').val();
+                if (!password3) {
+                    $('#txtPassword3').focus();
+                    return;
+                }
+                if(password2 != password3){
+                    alert('新密碼不一致，請重新輸入');
+                     $('#txtPassword2').val('');
+                     $('#txtPassword3').val('');
+                    return;
+                }
+                if(password == password2){
+                    alert('新舊密碼不能相同');
+                    $('#txtPassword2').val('');
+                    $('#txtPassword3').val('');
+                    return;
+                }
+                $.handle(api.changePassword(username, password, password2), function (result) {
+                    console.log(result);
+                    alert('修改成功，請重新登入');
+                    window.location.href = "./login.html";
+                }, function (error) {
+                    console.log(error);
+                    if (error.Status == 16) {
+                        alert('不能與前三次密碼相同')
+                    } else if (error.Status == 17) {
+                        alert("密碼至少八位，並需要包含大小寫英文字母與數字");
+                    } else {
+                        alert('密碼錯誤');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
