@@ -40,15 +40,11 @@ export default {
                 }
                 window.unblockUI();
             })
-                .catch((err) => {
-                    console.log(err);
-                    /*if (err.status == 410) {
-                        this.raiseOnExpire();
-                        return;
-                    }*/
-                    window.unblockUI();
-                    reject(err)
-                });
+            .catch((err) => {
+                console.log(err);
+                window.unblockUI();
+                reject(err)
+            });
         });
     },
 
@@ -101,6 +97,9 @@ export default {
     put(url, data) {
         return this.handle($axios.put(this.getUrl(url), data));
     },
+    patch(url, data) {
+        return this.handle($axios.patch(this.getUrl(url), data));
+    },
     putStatus(url) {
         return this.handle($axios.post(this.getUrl(url)));
     },
@@ -146,6 +145,9 @@ export default {
     delBanner(id) {
         return this.del('/pfantua/public/backend/api/banner/' + id);
     },
+    updateBannerStatus(id, data) {
+        return this.patch('/pfantua/public/backend/api/bannerStatus/' + id, data);
+    },
 
     getRoles() {
         return this.get('/pfantua/public/backend/api/roles');
@@ -181,6 +183,9 @@ export default {
     deleteNews(id) {
         return this.delete('/pfantua/public/backend/api/news/' + id);
     },
+    updateNewsStatus(id, data) {
+        return this.patch('/pfantua/public/backend/api/newsStatus/' + id, data);
+    },
 
     getCollageDepartments() {
         return this.get('/pfantua/public/backend/api/collageDepartments');
@@ -197,6 +202,9 @@ export default {
     deleteCollageDepartment(id) {
         return this.delete('/pfantua/public/backend/api/collageDepartment/' + id);
     },
+    updateCollageDepartmentStatus(id, data) {
+        return this.patch('/pfantua/public/backend/api/collageDepartmentStatus/' + id, data);
+    },
 
     getCollageColleagues() {
         return this.get('/pfantua/public/backend/api/collageColleagues');
@@ -212,6 +220,9 @@ export default {
     },
     deleteCollageColleague(id) {
         return this.delete('/pfantua/public/backend/api/collageColleague/' + id);
+    },
+    updateCollageColleagueStatus(id, data) {
+        return this.patch('/pfantua/public/backend/api/collageColleagueStatus/' + id, data);
     },
 
     getCollageInfo() {
@@ -239,6 +250,9 @@ export default {
     deleteRelatedResource(id) {
         return this.delete('/pfantua/public/backend/api/relatedResource/'+ id);
     },
+    updateRelatedResourceStatus(id, data) {
+        return this.patch('/pfantua/public/backend/api/relatedResourceStatus/' + id, data);
+    },
 
     getRegulations() {
         return this.get('/pfantua/public/backend/api/regulations');
@@ -255,6 +269,9 @@ export default {
     deleteRegulation(id) {
         return this.delete('/pfantua/public/backend/api/regulation/'+ id);
     },
+    updateRegulationStatus(id, data) {
+        return this.patch('/pfantua/public/backend/api/regulationStatus/' + id, data);
+    },
 
     getCollageHeadElections() {
         return this.get('/pfantua/public/backend/api/collageHeadElections');
@@ -270,6 +287,28 @@ export default {
     },
     deleteCollageHeadElection(id) {
         return this.delete('/pfantua/public/backend/api/collageHeadElection/'+ id);
+    },
+    updateCollageHeadElectionStatus(id, data) {
+        return this.patch('/pfantua/public/backend/api/collageHeadElectionStatus/' + id, data);
+    },
+
+    getCollageCourses() {
+        return this.get('/pfantua/public/backend/api/collageCourses');
+    },
+    getCollageCourse(id) {
+        return this.get('/pfantua/public/backend/api/collageCourse/' + id);
+    },
+    createCollageCourse(data) {
+        return this.post('/pfantua/public/backend/api/collageCourse', data, config);
+    },
+    updateCollageCourse(id, data) {
+        return this.put('/pfantua/public/backend/api/collageCourse/' + id, data, config);
+    },
+    deleteCollageCourse(id) {
+        return this.delete('/pfantua/public/backend/api/collageCourse/' + id);
+    },
+    updateCollageCourseStatus(id, data) {
+        return this.patch('/pfantua/public/backend/api/collageCourseStatus/' + id, data);
     },
 
     getCancelToken() {

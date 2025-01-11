@@ -124,13 +124,13 @@ export default {
           },
         },
         {
-          title: "狀態",
+          title: "發布狀態",
           data: "IsActive",
           render: function (data, type, row, meta) {
             if (data == "1") {
-              return '<span class="badge badge-success">啟用</span>';
+              return '<span class="badge badge-success">發布</span>';
             }
-            return '<span class="badge badge-danger">停權</span>';
+            return '<span class="badge badge-warning">隱藏</span>';
           },
         },
         {
@@ -142,6 +142,13 @@ export default {
               '<button type="button" class="btn btn-default" onclick="window.model.editItem(' +
                   data +
               ')">編輯</button>' +
+              (row["IsActive"] == "1"
+                ? '<button type="button" class="btn btn-default" onclick="window.model.updateItemPublishStatus(' +
+                  data +
+                  ', 0)">隱藏</button>'
+                : '<button type="button" class="btn btn-default" onclick="window.model.updateItemPublishStatus(' +
+                  data +
+                  ', 1)">上架</button>') +
               '<button type="button" class="btn btn-default" onclick="window.model.deleteItem(' +
                   data +
               ')">刪除</button>'
@@ -178,6 +185,13 @@ export default {
           this.load();
         });
       }
+    },
+    async updateItemPublishStatus(id, isActive) {  
+      var item = {
+        IsActive: isActive,
+      };    
+      await this.$api.updateNewsStatus(id, item);
+      this.load();
     }
   }
 };

@@ -130,7 +130,7 @@ import $ from "jquery";
 export default {
   data() {
     return {
-      MAX_FILE_SIZE: 20 * 1000 * 1000,
+      MAX_FILE_SIZE: 4 * 1000 * 1000,
       list:[],
       FileList: [],
       IsNew: true,
@@ -156,6 +156,7 @@ export default {
     if (!this.IsNew) {
       this.list = await this.$api.getCollageHeadElection(this.$route.params.id);
       this.collageHeadElection = this.list[0];
+      this.collageHeadElection.IsActive = this.collageHeadElection.IsActive == "1" ? true : false;
       this.collageHeadElection.CollageHeadElectionFiles.forEach((file) => {
         this.FileList.push({
           FileName: file.Name,
@@ -181,6 +182,8 @@ export default {
           Url: file.FileUrl,
         });
       });
+
+      this.collageHeadElection.IsActive = this.collageHeadElection.IsActive ? "1" : "0";
       if (this.IsNew) {
         await this.$api.createCollageHeadElection(this.collageHeadElection);
       } else {
@@ -246,7 +249,7 @@ export default {
 
       if (!file) return
       if (file.size > this.MAX_FILE_SIZE) {
-        alert('文件大小不能超過20MB');
+        alert('文件大小不能超過4MB');
         return;
       }
       this.uploadDragFile(file, 

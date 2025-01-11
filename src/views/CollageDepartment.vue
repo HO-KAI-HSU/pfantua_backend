@@ -199,18 +199,25 @@ export default {
             if (data == "1") {
               return '<span class="badge badge-success">啟用</span>';
             }
-            return '<span class="badge badge-warning">停用</span>';
+            return '<span class="badge badge-warning">隱藏</span>';
           },
         },
         {
           title: "功能",
           data: "CollageDepartmentID",
           width: 180,
-          render: function (data) {
+          render: function (data, type, row, meta) {
             return (
               '<button type="button" class="btn btn-info" onclick="window.model.editItem(' +
               data +
               ')">編輯</button>&nbsp;' +
+              (row["IsActive"] == "1"
+                ? '<button type="button" class="btn btn-default" onclick="window.model.updateItemPublishStatus(' +
+                  data +
+                  ', 0)">隱藏</button>'
+                : '<button type="button" class="btn btn-default" onclick="window.model.updateItemPublishStatus(' +
+                  data +
+                  ', 1)">啟用</button>') +
               '<button type="button" class="btn btn-danger" onclick="window.model.delItem(' +
               data +
               ')">刪除</button>'
@@ -247,6 +254,7 @@ export default {
           this.currentItem = i;
         }
       });
+      this.currentItem.IsActive = this.currentItem.IsActive == "1" ? true : false;
       this.$bvModal.show("mlItem");
     },
     async delItem(id) {
@@ -290,6 +298,7 @@ export default {
         return;
       }
       try {
+        this.currentItem.IsActive = this.currentItem.IsActive ? "1" : "0";
         if (this.currentItem.CollageDepartmentID) {
           await this.$api.updateCollageDepartment(this.currentItem.CollageDepartmentID, this.currentItem);
         } else {
@@ -303,6 +312,13 @@ export default {
         console.log(ex);
       }
       return;
+    },
+    async updateItemPublishStatus(id, isActive) {
+      var item = {
+        IsActive: isActive,
+      };
+      await this.$api.updateCollageDepartmentStatus(id, item);
+      this.load();
     },
   },
   watch: {

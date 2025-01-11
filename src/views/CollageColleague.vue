@@ -219,7 +219,9 @@ export default {
     if (!this.IsNew) {
       this.CollageColleagues = await this.$api.getCollageColleague(this.$route.params.id);
       this.currentItem = this.CollageColleagues[0];
-      this.currentItem.CollageDepartmentCodeArray = this.currentItem.CollageDepartmentCodes != null ? this.currentItem.CollageDepartmentCodes.split(",") : "";
+      this.currentItem.CollageDepartmentCodeArray = this.currentItem.CollageDepartmentCodes != null ?
+        this.currentItem.CollageDepartmentCodes.split(",") : "";
+      this.currentItem.IsActive = this.currentItem.IsActive == "1" ? true : false;
       this.imagefile.Url = this.currentItem.ImageUrl;
       this.imagefile.SrcFileName = this.currentItem.ImageUrl;
       this.Title = "編輯學院同仁內容";
@@ -282,6 +284,8 @@ export default {
       if (!this.validate("#doc")) {
         return;
       }
+
+      this.currentItem.IsActive = this.currentItem.IsActive ? "1" : "0";
       this.currentItem.ImageUrl = this.imagefile.Url;
       this.currentItem.CollageDepartmentCodes = this.currentItem.CollageDepartmentCodeArray.length > 0 ? 
         this.currentItem.CollageDepartmentCodeArray.join(",") : "";

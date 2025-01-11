@@ -85,10 +85,10 @@
                 </div>
               </div>
               <div class="form-group">
-                <label>啟用</label>
+                <label>發布狀態</label>
                 <select class="form-control" v-model="regulation.IsActive">
-                  <option :value="true">啟用</option>
-                  <option :value="false">停用</option>
+                  <option :value="true">發布</option>
+                  <option :value="false">隱藏</option>
                 </select>
               </div>
               <!-- /.card-body -->
@@ -140,6 +140,7 @@ export default {
     if (!this.IsNew) {
       this.RegulationList = await this.$api.getRegulation(this.$route.params.id);
       this.regulation = this.RegulationList[0];
+      this.regulation.IsActive = this.regulation.IsActive == "1" ? true : false;
       this.docfile.Url = this.regulation.FileUrl;
       this.docfile.SrcFileName = this.regulation.FileUrl;
       this.Title = "編輯法規章程內容";
@@ -195,6 +196,7 @@ export default {
         return;
       }
       this.regulation.FileUrl = this.docfile.Url;
+      this.regulation.IsActive = this.regulation.IsActive ? "1" : "0";
       if (this.IsNew) {
         var did = await this.$api.createRegulation(this.regulation);
       } else {
@@ -203,6 +205,13 @@ export default {
       alert("儲存完成", () => {
         this.$router.push(`/regulations`);
       });
+    },
+    async updateItemPublishStatus(id, isActive) {  
+      var item = {
+        IsActive: isActive,
+      };    
+      await this.$api.updateRegulationStatus(id, item);
+      this.loadRegulation();
     }
   },
 };

@@ -97,11 +97,11 @@ export default {
         { title: "院長遴選標題", data: "Title" },
         { title: "遴選年分", data: "Year" },
         {
-          title: "上下架狀態",
+          title: "發布狀態",
           data: "IsActive",
           render: function (data) {
-            if (data) {
-              return '<span class="badge badge-success">上架</span>';
+            if (data =="1") {
+              return '<span class="badge badge-success">發布</span>';
             }
             return '<span class="badge badge-warning">隱藏</span>';
           },
@@ -115,13 +115,13 @@ export default {
               '<button type="button" class="btn btn-default" onclick="window.model.editItem(' +
               data +
               ')">編輯</button>'
-              + (row["IsActive"]
+              + (row["IsActive"] == "1"
                 ? '<button type="button" class="btn btn-default" onclick="window.model.updateItemPublishStatus(' +
                   data +
-                  ')">隱藏</button>'
+                  ', 0)">隱藏</button>'
                 : '<button type="button" class="btn btn-default" onclick="window.model.updateItemPublishStatus(' +
                   data +
-                  ')">上架</button>')
+                  ', 1)">發布</button>')
               + '<button type="button" class="btn btn-default" onclick="window.model.deleteItem(' +
                   data +
               ')">刪除</button>'
@@ -154,8 +154,11 @@ export default {
         });
       }
     },
-    async updateItemPublishStatus(id) {      
-      await this.$api.updateCollageHeadElectionPublishStatus(id);
+    async updateItemPublishStatus(id, isActive) {  
+      var item = {
+        IsActive: isActive,
+      };    
+      await this.$api.updateCollageHeadElectionStatus(id, item);
       this.load();
     }
   },

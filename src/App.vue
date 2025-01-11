@@ -28,11 +28,10 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
-      <a href="index3.html" class="brand-link">
+      <a href="/" class="brand-link">
         <img src="./assets/logo.png" class="brand-image" style="opacity: 0.8" />
         <span class="brand-text font-weight-light" style="height: 30px"
-          >台灣藝術大學 藝術學院 管理後台</span
-        >
+          >台灣藝術大學 藝術學院 管理後台</span>
       </a>
 
       <!-- Sidebar -->
@@ -43,8 +42,7 @@
             class="nav nav-pills nav-sidebar flex-column"
             data-widget="treeview"
             role="menu"
-            data-accordion="false"
-          >
+            data-accordion="false">
             <li class="nav-item" v-auth="'Account'">
               <router-link to="/account" class="nav-link">
                 <i class="nav-icon fas fa-table"></i>

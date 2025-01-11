@@ -5,7 +5,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Banner管理</h1>
+            <h1 class="m-0 text-dark">學院開課資訊管理</h1>
           </div>
           <!-- /.col -->
           <div class="col-sm-6">
@@ -13,7 +13,7 @@
               <li class="breadcrumb-item">
                 <router-link to="/">首頁</router-link>
               </li>
-              <li class="breadcrumb-item active">Banner管理</li>
+              <li class="breadcrumb-item active">學院開課資訊管理</li>
             </ol>
           </div>
           <!-- /.col -->
@@ -27,39 +27,54 @@
     <!-- Main content -->
     <section class="content" id="tabs">
       <div class="container-fluid">
-        <div class="row" v-if="false">
-          <div class="col-12 col-sm-1">選擇分類</div>
-          <div class="col-12 col-sm-11">
-            <select class="form-control" v-model="type">
-              <option value="0">首頁大廣告</option>
-              <option value="4">手機板首頁大廣告</option>
-              <option value="1">頂部廣告</option>
-              <option value="2">首頁底部廣告</option>
-              <option value="3">右邊浮動廣告</option>
-            </select>
-          </div>
-        </div>
-        <div class="row" style="margin-top: 10px">
+        <div class="row">
           <div class="col-12 col-sm-12">
-            <div class="card card-info">
-              <div class="card-header">
-                <h3 class="card-title" style="padding-top: 10px">Banner</h3>
+            <div class="card card-primary card-outline card-tabs">
+              <div class="card-header p-0 pt-1 border-bottom-0">
+                <ul
+                  class="nav nav-tabs"
+                  id="custom-tabs-two-tab"
+                  role="tablist"
+                >
+                  <li class="nav-item">
+                    <a
+                      class="nav-link active"
+                      id="custom-tabs-two-collagecourse-tab"
+                      data-toggle="pill"
+                      href="#custom-tabs-two-collagecourse"
+                      role="tab"
+                      aria-controls="custom-tabs-two-collagecourse"
+                      aria-selected="true"
+                      >學院開課資訊管理</a>
+                  </li>
+                </ul>
                 <button
-              class="btn btn-default"
-              style="float: right"
-              @click="showAdd()"
-            >
-              新增
-            </button>
-              </div>
-              <div class="card-body">
-                <div id="tabItems"></div>
-              </div>
-              <div class="card-footer" v-if="false">
-                <button class="btn btn-primary" @click="updateSort()">
-                  儲存排序
+                  class="btn btn-success"
+                  v-auth="'AccountCreate'"
+                  style="
+                    float: right;
+                    position: relative;
+                    right: 10px;
+                    top: -43px;
+                  "
+                  @click="showAdd()"
+                >
+                  新增
                 </button>
               </div>
+              <div class="card-body">
+                <div class="tab-content" id="custom-tabs-two-tabContent">
+                  <div
+                    class="tab-pane fade active show"
+                    id="custom-tabs-two-collagecourse"
+                    role="tabpanel"
+                    aria-labelledby="custom-tabs-two-collagecourse-tab"
+                  >
+                    <div id="tabCollageCourses" v-auth="'CollageCourse'"></div>
+                  </div>
+                </div>
+              </div>
+              <!-- /.card -->
             </div>
           </div>
         </div>
@@ -79,36 +94,50 @@
     >
       <div class="card-body">
         <div class="form-group">
-          <label>標題</label>
+          <label>學院開課標題</label>
           <input
             type="text"
             class="form-control"
             placeholder="請輸入標題"
-            v-model="currentItem.BannerName"
-            required
-          />
+            v-model="currentItem.Title"
+            required/>
         </div>
         <div class="form-group">
-          <label>網址</label>
+          <label>學院開課代號</label>
           <input
             type="text"
             class="form-control"
-            placeholder="請輸入連結的網址"
-            v-model="currentItem.TargetUrl"
-          />
+            placeholder="請輸入代號"
+            v-model="currentItem.CollageCourseCode"
+            required/>
         </div>
         <div class="form-group">
-          <label>圖片</label>
-          <div id="mlBannerImage" class="image-box">
-            <img :src="currentItem.ImageUrl | imageCDN" />
-            <div class="change-btn">更換</div>
-          </div>
-        </div>
+          <label>學院開課系所</label>
+          <select
+            class="form-control"
+            required
+            v-model="currentItem.CollageDepartmentCode">
+            <option
+              :value="c.CollageDepartmentCode"
+              v-for="c in CollageDepartments"
+              :key="c.CollageDepartmentCode">
+              {{ c.Name }}
+            </option>
+          </select>
+        </div> 
         <div class="form-group">
-          <label>啟用</label>
+          <label>學院開課連結</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="請輸入連結"
+            v-model="currentItem.Url"/>
+        </div> 
+        <div class="form-group">
+          <label>發布狀態</label>
           <select class="form-control" v-model="currentItem.IsActive">
-            <option :value="true">啟用</option>
-            <option :value="false">停用</option>
+            <option :value="true">發布</option>
+            <option :value="false">隱藏</option>
           </select>
         </div>
       </div>
@@ -118,38 +147,31 @@
 </template>
 <script>
 import $ from "jquery";
-var allbanner = [];
 export default {
   data() {
     return {
       type: null,
       items: [],
+      CollageDepartments: [],
       mlItemTitle: "",
       currentItem: {
-        BannerName: "",
-        BannerType: "0",
-        ImageUrl: "",
-        TargetUrl: "",
-        Sort: 0,
-        IsActive: true,
-        CreateTime: ""
-      },
-      Image: null,
+        CollageDepartmentCode: "",
+        CollageCourseCode: "",
+        Title: "",
+        Url: "",
+        IsActive: true
+      }
     };
   },
   mounted() {
     window.model = this;
-    this.type = "0";
     this.load();
   },
   methods: {
     async load() {
-      allbanner = (await this.$api.getBanners()).groupBy((b) => b.BannerType);
-      this.loadBanner();
+      this.loadCollageCourse();
     },
-    async loadBanner() {
-      if (this.type == null || !allbanner) return;
-      this.items = allbanner[parseInt(this.type)];
+    async loadCollageCourse() {
       var cols = [
         {
           title: "#",
@@ -158,28 +180,22 @@ export default {
           },
         },
         {
-          title: "圖片",
-          data: "ImageUrl",
+          title: "學院開課標題",
+          data: "Title",
+        },
+        {
+          title: "學院開課代號",
+          data: "CollageCourseCode",
+        },
+        {
+          title: "學院開課系所",
+          data: "CollageDepartment",
           render: function (data, type, row, meta) {
-            return `<a href="${
-              row["TargetUrl"]
-            }" target="_blank"><img src="${window.Filter.imageCDN(
-              data
-            )}" alt="" style="max-width: 200px;"/></a>`;
+            return data.Name;
           },
         },
         {
-          title: "Banner標題",
-          data: "BannerName",
-          render: function (data, type, row, meta) {
-            if (!data) {
-              return "";
-            }
-            return `<p>${data}</p>`;
-          },
-        },
-        {
-          title: "啟用",
+          title: "發布狀態",
           data: "IsActive",
           render: function (data) {
             if (data == "1") {
@@ -190,7 +206,7 @@ export default {
         },
         {
           title: "功能",
-          data: "BannerID",
+          data: "CollageCourseID",
           width: 180,
           render: function (data, type, row, meta) {
             return (
@@ -203,7 +219,7 @@ export default {
                   ', 0)">隱藏</button>'
                 : '<button type="button" class="btn btn-default" onclick="window.model.updateItemPublishStatus(' +
                   data +
-                  ', 1)">上架</button>') +
+                  ', 1)">發布</button>') +
               '<button type="button" class="btn btn-danger" onclick="window.model.delItem(' +
               data +
               ')">刪除</button>'
@@ -211,26 +227,26 @@ export default {
           },
         },
       ];
-
-      //this.items.sort((a, b) => a.Sort - b.Sort);
-      this.createDataTable("#tabItems", cols, this.items, {
+      this.items = await this.$api.getCollageCourses();
+      this.CollageDepartments = await this.$api.getCollageDepartments();
+      var catMap = {};
+      this.CollageDepartments.forEach((c) => (catMap[c.CollageDepartmentCode] = c));
+      this.items.forEach((t) => {
+        t.CollageDepartment = catMap[t.CollageDepartmentCode];
+      });
+      this.createDataTable("#tabCollageCourses", cols, this.items, {
         bSort: false,
         paging: false,
       });
     },
     showAdd() {
-      this.mlItemTitle = "新增Banner";
+      this.mlItemTitle = "新增開課資訊內容";
       this.currentItem = {
-        BannerName: "",
-        ImageUrl: "",
-        StartTime: "",
-        EndTime: "",
-        IsActive: true,
-        CreateTime: "",
-        Sort: 0,
-        BannerType: this.type,
-        TargetUrl: "",
-        CreateTime: moment().format("YYYY-MM-DD HH:mm:ss"),
+        CollageDepartmentCode: "",
+        CollageCourseCode: "",
+        Title: "",
+        Url: "",
+        IsActive: true
       };
       this.Image = null;
       this.$bvModal.show("mlItem");
@@ -239,34 +255,24 @@ export default {
       });
     },
     editItem(id) {
-      this.mlItemTitle = "修改Banner";
+      this.mlItemTitle = "修改開課資訊內容";
       this.items.forEach((i) => {
-        if (i.BannerID == id) {
+        if (i.CollageCourseID == id) {
           this.currentItem = i;
         }
       });
-      this.currentItem.StartTime = moment(this.currentItem.StartTime).format(
-        "YYYY-MM-DD"
-      );
-      this.currentItem.EndTime = moment(this.currentItem.EndTime).format(
-        "YYYY-MM-DD"
-      );
       this.currentItem.IsActive = this.currentItem.IsActive == "1" ? true : false;
-      this.Image = null;
       this.$bvModal.show("mlItem");
-      setTimeout(() => {
-        this.imageUpload(".image-box", (f) => (this.Image = f));
-      });
     },
     async delItem(id) {
       $.each(this.items, (i, r) => {
-        if (r.BannerID == id) {
+        if (r.CollageCourseID == id) {
           this.currentItem = r;
         }
       });
       if (this.currentItem) {
-        confirm("請問要刪除廣告：" + this.currentItem.BannerName, async (r) => {
-          await this.$api.delBanner(this.currentItem.BannerID);
+        confirm("請問要刪除此開課資訊：" + this.currentItem.Title, async (r) => {
+          await this.$api.deleteCollageCourse(this.currentItem.CollageCourseID);
           this.load();
         });
       }
@@ -291,10 +297,6 @@ export default {
         first.focus();
         return;
       }
-
-      await this.$api.updateBannerSort({
-        Data: data,
-      });
       this.load();
     },
     async mlDialogOK(e) {
@@ -302,23 +304,12 @@ export default {
       if (!this.validate("#mlItem")) {
         return;
       }
-      if (this.Image) {
-         var response = await this.$api.upload(
-          '/pfantua/public/backend/api/uploadImage/banner',
-          this.Image
-        );
-        this.currentItem.ImageUrl =  response.Item2;
-        this.currentItem.IsActive = this.currentItem.IsActive ? "1" : "0";
-      }
-      if (!this.currentItem.ImageUrl) {
-        alert("請選擇圖片");
-        return;
-      }
       try {
-        if (this.currentItem.BannerID) {
-          await this.$api.updateBanner(this.currentItem.BannerID, this.currentItem);
+        this.currentItem.IsActive = this.currentItem.IsActive ? "1" : "0";
+        if (this.currentItem.CollageCourseID) {
+          await this.$api.updateCollageCourse(this.currentItem.CollageCourseID, this.currentItem);
         } else {
-          this.currentItem.BannerID = await this.$api.createBanner(
+          this.currentItem.CollageCourseID = await this.$api.createCollageCourse(
             this.currentItem
           );
         }
@@ -329,17 +320,17 @@ export default {
       }
       return;
     },
-    async updateItemPublishStatus(id, isActive) {
+    async updateItemPublishStatus(id, isActive) {  
       var item = {
         IsActive: isActive,
-      };
-      await this.$api.updateBannerStatus(id, item);
-      this.load();
-    },
+      };    
+      await this.$api.updateCollageCourseStatus(id, item);
+      this.loadCollageCourse();
+    }
   },
   watch: {
     type() {
-      this.loadBanner();
+      this.loadCollageCourse();
     },
   },
 };

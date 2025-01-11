@@ -179,6 +179,7 @@ export default {
     if (!this.IsNew) {
       this.NewsList = await this.$api.getNews(this.$route.params.id);
       this.news = this.NewsList[0];
+      this.news.IsActive = this.news.IsActive == "1" ? true : false;
       this.imagefile.Url = this.news.ImageUrl;
       this.imagefile.SrcFileName = this.news.ImageUrl;
       this.Title = "編輯最新消息內容";
@@ -234,11 +235,13 @@ export default {
         return;
       }
       this.news.ImageUrl = this.imagefile.Url;
+      this.news.IsActive = this.news.IsActive ? "1" : "0";
       if (this.IsNew) {
-        var did = await this.$api.createNews(this.news);
+        var result = await this.$api.createNews(this.news);
       } else {
-        await this.$api.updateNews(this.$route.params.id, this.news);
+        var result = await this.$api.updateNews(this.$route.params.id, this.news);
       }
+      console.log(result);
       alert("儲存完成", () => {
         this.$router.push(`/news`);
       });

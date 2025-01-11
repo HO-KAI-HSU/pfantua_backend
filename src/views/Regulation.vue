@@ -261,6 +261,13 @@ export default {
               '<button type="button" class="btn btn-info" onclick="window.model.editItem(' +
               data +
               ')">編輯</button>&nbsp;' +
+              (row["IsActive"] == "1"
+                ? '<button type="button" class="btn btn-default" onclick="window.model.updateItemPublishStatus(' +
+                  data +
+                  ')">隱藏</button>'
+                : '<button type="button" class="btn btn-default" onclick="window.model.updateItemPublishStatus(' +
+                  data +
+                  ')">上架</button>') +
               '<button type="button" class="btn btn-danger" onclick="window.model.delItem(' +
               data +
               ')">刪除</button>'
@@ -291,6 +298,7 @@ export default {
           this.currentItem = i;
         }
       });
+      this.currentItem.IsActive = this.currentItem.IsActive == "1" ? true : false;
       this.$bvModal.show("mlItem");
       this.docfile.Url = this.currentItem.FileUrl;
       this.docfile.SrcFileName = this.currentItem.FileUrl;
@@ -337,6 +345,7 @@ export default {
         return;
       }
       try {
+        this.currentItem.IsActive = this.currentItem.IsActive ? "1" : "0";
         if (this.currentItem.RegulationID) {
           await this.$api.updateRegulation(this.currentItem.RegulationID, this.currentItem);
         } else {
