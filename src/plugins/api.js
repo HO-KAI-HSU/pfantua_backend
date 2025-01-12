@@ -142,11 +142,30 @@ export default {
     updateBanner(id, data) {
         return this.put('/pfantua/public/backend/api/banner/' + id, data);
     },
-    delBanner(id) {
-        return this.del('/pfantua/public/backend/api/banner/' + id);
+    deleteBanner(id) {
+        return this.delete('/pfantua/public/backend/api/banner/' + id);
     },
     updateBannerStatus(id, data) {
         return this.patch('/pfantua/public/backend/api/bannerStatus/' + id, data);
+    },
+
+    getActivityHistories() {
+        return this.get('/pfantua/public/backend/api/activities');
+    },
+    getActivityHistory(id) {
+        return this.get('/pfantua/public/backend/api/activity/' + id);
+    },
+    createActivityHistory(data) {
+        return this.post('/pfantua/public/backend/api/activity', data);
+    },
+    updateActivityHistory(id, data) {
+        return this.put('/pfantua/public/backend/api/activity/' + id, data);
+    },
+    deleteActivityHistory(id) {
+        return this.delete('/pfantua/public/backend/api/activity/' + id);
+    },
+    updateActivityHistoryStatus(id, data) {
+        return this.patch('/pfantua/public/backend/api/activityStatus/' + id, data);
     },
 
     getRoles() {

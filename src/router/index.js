@@ -36,6 +36,16 @@ const routes = [
     component: () => import('../views/CollageHeadElection.vue')
   },
   {
+    path: '/activityHistories',
+    name: 'ActivityHistoryList',
+    component: () => import('../views/ActivityHistoryList.vue')
+  },
+  {
+    path: '/activityHistory/:id',
+    name: 'ActivityHistory',
+    component: () => import('../views/ActivityHistory.vue')
+  },
+  {
     path: '/relatedResources',
     name: 'RelatedResourceList',
     component: () => import('../views/RelatedResource.vue')
@@ -61,14 +71,9 @@ const routes = [
     component: () => import('../views/CollageDepartment.vue')
   },
   {
-    path: '/lessons',
-    name: 'LessonList',
-    component: () => import('../views/LessonList.vue')
-  },
-  {
-    path: '/lesson/:id',
-    name: 'Lesson',
-    component: () => import('../views/Lesson.vue')
+    path: '/collageCourse',
+    name: 'CollageCourse',
+    component: () => import('../views/CollageCourse.vue')
   },
   {
     path: '/banner',
@@ -84,16 +89,6 @@ const routes = [
     path: '/setting',
     name: 'Setting',
     component: () => import('../views/Setting.vue')
-  },
-  {
-    path: '/members',
-    name: 'MemberList',
-    component: () => import('../views/MemberList.vue')
-  },
-  {
-    path: '/member/:id',
-    name: 'Member',
-    component: () => import('../views/Member.vue')
   },
   {
     path: '/news',

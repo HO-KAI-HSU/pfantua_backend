@@ -55,10 +55,10 @@
                 <p>Banner管理</p>
               </router-link>
             </li>
-            <li class="nav-item" v-auth="'News'">
-              <router-link to="/news" class="nav-link">
+            <li class="nav-item" v-auth="'ActivityHistory'">
+              <router-link to="/activityHistories" class="nav-link">
                 <i class="nav-icon fas fa-table"></i>
-                <p>最新消息管理</p>
+                <p>活動花絮管理</p>
               </router-link>
             </li>
             <li class="nav-item" v-auth="'Activities'">
@@ -77,6 +77,12 @@
               <router-link to="/collagedepartment" class="nav-link">
                 <i class="nav-icon fas fa-table"></i>
                 <p>學院系所管理</p>
+              </router-link>
+            </li>
+            <li class="nav-item" v-auth="'CollageCourse'">
+              <router-link to="/collageCourse" class="nav-link">
+                <i class="nav-icon fas fa-table"></i>
+                <p>學院開課資訊管理</p>
               </router-link>
             </li>
             <li class="nav-item" v-auth="'CollageColleague'">
