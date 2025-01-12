@@ -180,12 +180,12 @@ export default {
           },
         },
         {
-          title: "學院開課標題",
-          data: "Title",
-        },
-        {
           title: "學院開課代號",
           data: "CollageCourseCode",
+        },
+        {
+          title: "學院開課標題",
+          data: "Title",
         },
         {
           title: "學院開課系所",

@@ -114,7 +114,7 @@
               :id="'head-' + (i + 1)"
               :key="i"
             >
-              <h5>第{{ i + 1 }}章</h5>
+              <h5>第{{ i + 1 }}位</h5>
               <button
                 type="button"
                 class="close"
