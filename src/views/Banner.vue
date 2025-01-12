@@ -266,7 +266,7 @@ export default {
       });
       if (this.currentItem) {
         confirm("請問要刪除廣告：" + this.currentItem.BannerName, async (r) => {
-          await this.$api.delBanner(this.currentItem.BannerID);
+          await this.$api.deleteBanner(this.currentItem.BannerID);
           this.load();
         });
       }
