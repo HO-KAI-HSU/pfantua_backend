@@ -79,6 +79,13 @@
     >
       <div class="card-body">
         <div class="form-group">
+          <label>圖片</label>
+          <div id="mlBannerImage" class="image-box">
+            <img :src="currentItem.ImageUrl | imageCDN" />
+            <div class="change-btn">選擇</div>
+          </div>
+        </div>
+        <div class="form-group">
           <label>標題</label>
           <input
             type="text"
@@ -97,13 +104,7 @@
             v-model="currentItem.TargetUrl"
           />
         </div>
-        <div class="form-group">
-          <label>圖片</label>
-          <div id="mlBannerImage" class="image-box">
-            <img :src="currentItem.ImageUrl | imageCDN" />
-            <div class="change-btn">更換</div>
-          </div>
-        </div>
+
         <div class="form-group">
           <label>啟用</label>
           <select class="form-control" v-model="currentItem.IsActive">

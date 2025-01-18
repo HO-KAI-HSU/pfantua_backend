@@ -50,7 +50,6 @@
                 </ul>
                 <button
                   class="btn btn-success"
-                  v-auth="'AccountCreate'"
                   style="
                     float: right;
                     position: relative;
@@ -230,7 +229,7 @@ export default {
       });
     },
     showAdd() {
-      this.mlItemTitle = "新增相關資源內容";
+      this.mlItemTitle = "新增相關資源";
       this.currentItem = {
         RelatedResourceCategoryID: 1,
         Title: "",
@@ -244,7 +243,7 @@ export default {
       });
     },
     editItem(id) {
-      this.mlItemTitle = "修改相關資源內容";
+      this.mlItemTitle = "修改相關資源";
       this.items.forEach((i) => {
         if (i.RelatedResourceID == id) {
           this.currentItem = i;

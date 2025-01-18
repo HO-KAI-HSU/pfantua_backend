@@ -2,10 +2,12 @@
 import $ from 'jquery';
 import qs from 'qs';
 import user from '../plugins/user'
+import userip from '../plugins/user-ip-info'
 
 import $axios from 'axios';
 
 let token = user.user ? user.user.t : null;
+let _ip = userip.ipInfo ? userip.ipInfo.ip : null;
 var enableBlockUI = true;
 
 export default {
@@ -15,12 +17,31 @@ export default {
     setEnableBlockUI(value) {
         enableBlockUI = value;
     },
+    setIp() {
+        userip.getIpInfo()
+        .then(ip => {
+            _ip = ip.ip;
+        });
+    },
     getUrl(url) {
         if (token) {
             if (url.indexOf('?') > 0) {
                 url += '&t=' + encodeURIComponent(token);
             } else {
                 url += '?t=' + encodeURIComponent(token);
+            }
+            if (_ip) {
+                url += '&ip=' + _ip; 
+            } else {
+                this.setIp();
+                url += '&ip=' + _ip; 
+            }  
+        } else {
+            if (_ip) {
+                url += '?ip=' + _ip; 
+            } else {
+                this.setIp();
+                url += '?ip=' + _ip; 
             }
         }
         return config.host + url;
@@ -33,10 +54,18 @@ export default {
             }
             p.then(res => {
                 var data = res.data;
+                console.log(data);
                 if (data.Success) {
                     resolve(data.Result);
                 } else {
-                    reject(res)
+                    if (data.Status == 6) {
+                        window.alert('登入逾時，請重新登入');
+                        user.logout();
+                        window.location.href = "login.html";
+                    }
+                    else {
+                        reject(res)
+                    }               
                 }
                 window.unblockUI();
             })
@@ -69,7 +98,16 @@ export default {
         const { data } = await $axios.get(this.getUrl(endpoint));
         return data;
     },
-
+    fetchData(url) {
+        return new Promise((resolve, reject) => {
+            url.then(res => {
+                resolve(res);
+            })
+            .catch((err) => {
+                reject(err)
+            })
+        });
+    },
     get(url, data) {
         if (!data) {
             return this.handle($axios.get(this.getUrl(url)));
@@ -119,15 +157,15 @@ export default {
     },
 
     createAccount(data) {
-        return this.post('/api/backend/CreateAccount', data);
+        return this.post('/pfantua/public/backend/api/user', data);
     },
 
     updateAccount(id, data) {
-        return this.put('/api/backend/UpdateAccount/' + id, data);
+        return this.put('/pfantua/public/backend/api/user/' + id, data);
     },
 
     deleteAccount(id) {
-        return this.delete('/api/backend/DeleteAccount/' + id);
+        return this.delete('/pfantua/public/backend/api/user/' + id);
     },
 
     getBanners() {
@@ -330,6 +368,13 @@ export default {
         return this.patch('/pfantua/public/backend/api/collageCourseStatus/' + id, data);
     },
 
+    getSystemLogs() {
+        return this.get('/pfantua/public/backend/api/systemLogs');
+    },
+    getMemberIpInfo() {
+        return this.fetchData($.get('https://ipinfo.io/json'));
+    },
+
     getCancelToken() {
         return $axios.CancelToken.source();
     },
@@ -352,73 +397,4 @@ export default {
             }
         });
     },
-    getLessonCategories() {
-        return this.get('/api/backend/GetLessonCategories');
-    },
-    getLessons() {
-        return this.get('/api/backend/GetLessons');
-    },
-    getLesson(id) {
-        return this.get('/api/backend/GetLesson/' + id);
-    },
-    addLesson(data) {
-        return this.post('/api/backend/CreateLesson', data);
-    },
-    updateLesson(data) {
-        return this.post('/api/backend/UpdateLesson', data);
-    },
-    deleteLesson(id) {
-        return this.delete('/api/backend/DeleteLesson/' + id);
-    },
-    updateLessonPublishStatus(id) {
-        return this.putStatus('/api/backend/UpdateLessonPublishStatus/' + id);
-    },
-    updateBannerSort(data) {
-        return this.post('/api/backend/UpdateBannerSort', data);
-    },
-    getCss() {
-        return this.get('/api/backend/GetCss');
-    },
-    updateCss(data) {
-        return this.post('/api/backend/UpdateCss', data);
-    },
-    getSetting(){
-        return this.get('/api/backend/GetSetting');
-    },
-    updateSetting(data) {
-        return this.post('/api/backend/UpdateSetting', data);
-    },
-    getMembers(){
-        return this.get('/api/backend/GetMembers');
-    },
-    getMember(id) {
-        return this.get('/api/backend/GetMember/' + id);
-    },
-    updateMember(data) {
-        return this.post('/api/backend/UpdateMember', data);
-    },
-    updateMemberPassword(data) {
-        return this.post('/api/backend/UpdateMemberPassword', data);
-    },
-    getLessonStatistics(startDate, endDate) {
-        return this.get('/api/backend/GetLessonStatisticList?' + 'startDate=' + startDate + '&endDate=' + endDate);
-    },
-    getTeachPlanStatistics(startDate, endDate) {
-        return this.get('/api/backend/GetTeachPlanStatisticList?' + 'startDate=' + startDate + '&endDate=' + endDate);
-    },
-    getMemberLessonStatistics(startDate, endDate, sortBy) {
-        return this.get('/api/backend/GetMemberLessonStatisticList?' + 'startDate=' + startDate + '&endDate=' + endDate+ '&sortBy=' + sortBy);
-    },
-    getMemberLessonStatisticsRanking(startDate, endDate, sortBy) {
-        return this.get('/api/backend/GetMemberLessonRankingList?' + 'startDate=' + startDate + '&endDate=' + endDate+ '&sortBy=' + sortBy);
-    },
-    getMemberTeachPlanStatistics(startDate, endDate) {
-        return this.get('/api/backend/GetMemberTeachPlanStatisticList?' + 'startDate=' + startDate + '&endDate=' + endDate);
-    },
-    getMemberRegisterStatistics(startDate, endDate, dateType) {
-        return this.get('/api/backend/GetMemberRegisterStatisticList?' + 'startDate=' + startDate + '&endDate=' + endDate + '&dateType=' + dateType);
-    },
-    getMemberRegisterCounts(startDate, endDate, dateType) {
-        return this.get('/api/backend/GetMemberRegisterTotalCountsByDate?' + 'startDate=' + startDate + '&endDate=' + endDate + '&dateType=' + dateType);
-    }
 }

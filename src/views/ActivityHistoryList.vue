@@ -5,7 +5,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">活動花絮管理</h1>
+            <h1 class="m-0 text-dark">活動集錦管理</h1>
           </div>
           <!-- /.col -->
           <div class="col-sm-6">
@@ -13,7 +13,7 @@
               <li class="breadcrumb-item">
                 <router-link to="/">首頁</router-link>
               </li>
-              <li class="breadcrumb-item active">活動花絮管理</li>
+              <li class="breadcrumb-item active">活動集錦管理</li>
             </ol>
           </div>
           <!-- /.col -->
@@ -44,7 +44,7 @@
                 role="tab"
                 aria-controls="custom-tabs-activityHistory"
                 aria-selected="true"
-                >活動花絮管理</a
+                >活動集錦管理</a
               >
             </li>
           </ul>
@@ -94,7 +94,7 @@ export default {
             return meta.row + 1;
           },
         },
-        { title: "活動花絮標題", data: "Title" },
+        { title: "活動集錦標題", data: "Title" },
         {
           title: "發布狀態",
           data: "IsActive",
@@ -147,7 +147,7 @@ export default {
         }
       }); 
       if (this.currentItem) {
-        confirm("請問要刪除此活動花絮?", async (r) => {
+        confirm("請問要刪除此活動集錦?", async (r) => {
           await this.$api.deleteActivityHistory(id);
           this.load();
         });

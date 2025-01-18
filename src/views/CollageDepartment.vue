@@ -91,8 +91,15 @@
       @ok="mlDialogOK"
       v-if="currentItem"
       ok-only
-    >
+    >   
       <div class="card-body">
+        <div class="form-group">
+          <label>圖片</label>
+          <div id="mlBannerImage" class="image-box">
+            <img :src="currentItem.ImageUrl | imageCDN" />
+            <div class="change-btn">選擇</div>
+          </div>
+        </div>
         <div class="form-group">
           <label>系所代號</label>
           <input
@@ -151,13 +158,15 @@ export default {
       items: [],
       mlItemTitle: "",
       currentItem: {
+        ImageUrl: "",
         CollageDepartmentCode: "",
         Name: "",
         Content: "",
         CollageDepartmentLinkUrl: "",
         Sort: 0,
         IsActive: true
-      }
+      },
+      Image: null,
     };
   },
   mounted() {
@@ -174,6 +183,17 @@ export default {
           title: "#",
           render: function (data, type, row, meta) {
             return meta.row + 1;
+          },
+        },
+        {
+          title: "系所圖片",
+          data: "ImageUrl",
+          render: function (data, type, row, meta) {
+            return `<a href="${
+              row["TargetUrl"]
+            }" target="_blank"><img src="${window.Filter.imageCDN(
+              data
+            )}" alt="" style="max-width: 200px;"/></a>`;
           },
         },
         {
@@ -234,6 +254,7 @@ export default {
     showAdd() {
       this.mlItemTitle = "新增系所資訊";
       this.currentItem = {
+        ImageUrl: "",
         CollageDepartmentCode: "",
         Name: "",
         Content: "",
@@ -254,8 +275,12 @@ export default {
           this.currentItem = i;
         }
       });
+      this.Image = null;
       this.currentItem.IsActive = this.currentItem.IsActive == "1" ? true : false;
       this.$bvModal.show("mlItem");
+      setTimeout(() => {
+        this.imageUpload(".image-box", (f) => (this.Image = f));
+      });
     },
     async delItem(id) {
       $.each(this.items, (i, r) => {
@@ -297,6 +322,17 @@ export default {
       if (!this.validate("#mlItem")) {
         return;
       }
+      if (this.Image) {
+         var response = await this.$api.upload(
+          '/pfantua/public/backend/api/uploadImage/collageDepartment',
+          this.Image
+        );
+        this.currentItem.ImageUrl =  response.Item2;
+      }
+      if (!this.currentItem.ImageUrl) {
+        alert("請選擇圖片");
+        return;
+      }      
       try {
         this.currentItem.IsActive = this.currentItem.IsActive ? "1" : "0";
         if (this.currentItem.CollageDepartmentID) {

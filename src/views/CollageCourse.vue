@@ -5,7 +5,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">學院開課資訊管理</h1>
+            <h1 class="m-0 text-dark">學院課程管理</h1>
           </div>
           <!-- /.col -->
           <div class="col-sm-6">
@@ -13,7 +13,7 @@
               <li class="breadcrumb-item">
                 <router-link to="/">首頁</router-link>
               </li>
-              <li class="breadcrumb-item active">學院開課資訊管理</li>
+              <li class="breadcrumb-item active">學院課程管理</li>
             </ol>
           </div>
           <!-- /.col -->
@@ -45,7 +45,7 @@
                       role="tab"
                       aria-controls="custom-tabs-two-collagecourse"
                       aria-selected="true"
-                      >學院開課資訊管理</a>
+                      >學院課程管理</a>
                   </li>
                 </ul>
                 <button
@@ -92,16 +92,8 @@
       v-if="currentItem"
       ok-only
     >
+
       <div class="card-body">
-        <div class="form-group">
-          <label>學院開課標題</label>
-          <input
-            type="text"
-            class="form-control"
-            placeholder="請輸入標題"
-            v-model="currentItem.Title"
-            required/>
-        </div>
         <div class="form-group">
           <label>學院開課代號</label>
           <input
@@ -109,6 +101,15 @@
             class="form-control"
             placeholder="請輸入代號"
             v-model="currentItem.CollageCourseCode"
+            required/>
+        </div>
+        <div class="form-group">
+          <label>學院開課標題</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="請輸入標題"
+            v-model="currentItem.Title"
             required/>
         </div>
         <div class="form-group">

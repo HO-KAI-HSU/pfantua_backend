@@ -5,7 +5,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">活動花絮內容管理</h1>
+            <h1 class="m-0 text-dark">活動集錦內容管理</h1>
           </div>
           <!-- /.col -->
           <div class="col-sm-6">
@@ -13,7 +13,7 @@
               <li class="breadcrumb-item">
                 <router-link to="/">首頁</router-link>
               </li>
-              <li class="breadcrumb-item active">活動花絮內容管理</li>
+              <li class="breadcrumb-item active">活動集錦管理</li>
             </ol>
           </div>
           <!-- /.col -->
@@ -36,12 +36,12 @@
           <div class="card-body">
             <form role="form">
               <div class="form-group">
-                <label>活動花絮標題</label>
+                <label>活動集錦標題</label>
                 <input
                   type="text"
                   class="form-control"
                   required
-                  placeholder="請輸入活動花絮標題，最多100個字"
+                  placeholder="請輸入活動集錦標題，最多100個字"
                   maxlength="100"
                   v-model="activityHistory.Activity.Title"/>
               </div>
@@ -67,7 +67,7 @@
         </div>
         <div class="card card-primary">
           <div class="card-header">
-            <h3 class="card-title">活動花絮圖片編輯</h3>
+            <h3 class="card-title">活動集錦圖片編輯</h3>
           </div>
           <!-- /.card-header -->
           <!-- form start -->
@@ -75,7 +75,7 @@
             <div
               class="callout callout-info"
               v-for="(activityImageFile, i) in activityImageFiles"
-              :id="'activityimage-' + (i + 1)"
+              :id="'activityimage-' + i"
               :key="i">
               <h5>第{{ i + 1 }}張</h5>
               <button
@@ -87,7 +87,7 @@
               </button>
               <hr />
               <div class="form-group">
-                <label class="col-sm-2 col-form-label">活動花絮圖片標題</label>
+                <label class="col-sm-2 col-form-label">活動集錦圖片標題</label>
                 <div class="col-sm-10">
                   <input
                     type="text"
@@ -99,7 +99,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label>活動花絮圖片上傳</label>
+                <label>活動集錦圖片上傳</label>
                 <div class="input-group">
                   <div class="custom-file">
                     <input
@@ -137,7 +137,7 @@
                 </div>
               </div>
             </div>
-            <button class="btn btn-success" @click="addActivityImage">
+            <button class="btn btn-success" @click="addActivityImage()">
               新增圖片編輯框
             </button>
           </div>
@@ -153,7 +153,7 @@
         </div>
         <div class="card card-primary">
           <div class="card-header">
-            <h3 class="card-title">活動花絮影片連結編輯</h3>
+            <h3 class="card-title">活動集錦影片連結編輯</h3>
           </div>
           <!-- /.card-header -->
           <!-- form start -->
@@ -161,7 +161,7 @@
             <div
               class="callout callout-info"
               v-for="(activityVideoFile, i) in activityVideoFiles"
-              :id="'activityvideo-' + (i + 1)"
+              :id="'activityvideo-' + i"
               :key="i" >
               <h5>第{{ i + 1 }}個</h5>
               <button
@@ -173,7 +173,7 @@
               </button>
               <hr />
               <div class="form-group">
-                <label class="col-sm-2 col-form-label">活動花絮影片標題</label>
+                <label class="col-sm-2 col-form-label">活動集錦影片標題</label>
                 <div class="col-sm-10">
                   <input
                     type="text"
@@ -185,7 +185,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label>活動花絮影片圖示上傳</label>
+                <label>活動集錦影片圖示上傳</label>
                 <div class="input-group">
                   <div class="custom-file">
                     <input
@@ -223,7 +223,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 col-form-label">活動花絮影片連結</label>
+                <label class="col-sm-2 col-form-label">活動集錦影片連結</label>
                 <div class="col-sm-10">
                   <input
                     type="text"
@@ -235,7 +235,7 @@
                 </div>
               </div>
             </div>
-            <button class="btn btn-success" @click="addActivityVideo">
+            <button class="btn btn-success" @click="addActivityVideo()">
               新增影片編輯框
             </button>
           </div>
@@ -271,6 +271,8 @@ export default {
       activityVideoFiles: [],
       activeImageIndex: 0,
       activeVideoIndex: 0,
+      activeImageCount: 0,
+      activeVideoCount: 0,
       activityType: 1,
       activityEl: null
     };
@@ -308,9 +310,13 @@ export default {
           }
         });
       });
-      this.Title = "編輯活動花絮內容";
+      this.activeImageCount = this.activityImageFiles.length;
+      this.activeVideoCount = this.activityVideoFiles.length;
+      this.updateImageUploadList();
+      this.updateVideoUploadList();
+      this.Title = "編輯活動集錦";
     } else {
-      this.Title = "新增活動花絮內容";
+      this.Title = "新增活動集錦";
     }
     this.load();
   },
@@ -394,6 +400,12 @@ export default {
           File: null,
         }
       });
+
+      // 超過 count 的圖片，就加上觸發操作
+      var count = this.activityImageFiles.length;
+      if (count > this.activeImageCount) {
+        this.updateImageUpload(this.activityImageFiles[count - 1], count - 1);
+      }
     },
     addActivityVideo() {
       this.activityVideoFiles.push({
@@ -408,6 +420,12 @@ export default {
           File: null,
         }
       });
+
+      // 超過 count 的圖片，就加上觸發操作
+      var count = this.activityVideoFiles.length;
+      if (this.activityVideoFiles.length > this.activeVideoCount) {
+        this.updateVideoUpload(this.activityVideoFiles[count - 1], count - 1);
+      }
     },
 
     removeActivityImage(q) {
@@ -418,36 +436,59 @@ export default {
     removeActivityVideo(q) {
         confirm("請問要刪除此檔案?", async (r) => {
           this.activityVideoFiles.remove(q);
-        });  
+        });
     },
     checkActiveImageIndex(type, index) {
       console.log("ActiveImageIndex : " + index);
       this.activeImageIndex = index;
       this.activityType = type;
-      this.$nextTick(() => {
-        console.log(this.activeImageIndex);
-        console.log(this.activeVideoIndex);
-        console.log(this.activityType);     
-        this.fileUpload(     
-          "#upload-plan-file-" + this.activityType + "-" + this.activeImageIndex,
-          this.callback(this.activityImageFiles[this.activeImageIndex].Imagefile, "/pfantua/public/backend/api/uploadImage/activityHistoryImage")
-        );
-      });
     },
     checkActiveVideoIndex(type, index) {
       console.log("ActiveVideoIndex : " + index);
       this.activeVideoIndex = index;
       this.activityType = type;
-      this.$nextTick(() => {
-      console.log(this.activeImageIndex);
-      console.log(this.activeVideoIndex);
-      console.log(this.activityType);     
-      this.fileUpload(     
-        "#upload-plan-file-" + this.activityType + "-" + this.activeVideoIndex,
-        this.callback(this.activityVideoFiles[this.activeVideoIndex].Imagefile, "/pfantua/public/backend/api/uploadImage/activityHistoryVideo")
-      );
-    });
     }, 
+
+    updateImageUploadList() {
+      console.log("updateImageUploadList");
+      this.activityImageFiles.forEach((file, i) => {
+        this.$nextTick(() => {
+          this.fileUpload(
+            "#upload-plan-file-" + 1 + "-" + i,
+            this.callback(file.Imagefile, "/pfantua/public/backend/api/uploadImage/activityHistoryImage")
+          );
+        });
+      });
+    },
+    updateImageUpload(file, i) {
+      console.log("updateImageUploadCount : " + i);
+      this.$nextTick(() => {
+        this.fileUpload(
+          "#upload-plan-file-" + 1 + "-" + i,
+          this.callback(file.Imagefile, "/pfantua/public/backend/api/uploadImage/activityHistoryImage")
+        );
+      });
+    },
+    updateVideoUploadList() {
+      console.log("updateVideoUploadList");
+      this.activityVideoFiles.forEach((file, i) => {
+        this.$nextTick(() => {
+          this.fileUpload(
+            "#upload-plan-file-" + 2 + "-" + i,
+            this.callback(file.Imagefile, "/pfantua/public/backend/api/uploadImage/activityHistoryVideo")
+          );
+        });
+      });
+    },
+    updateVideoUpload(file, i) {
+      console.log("updateVideoUploadCount : " + i);
+      this.$nextTick(() => {
+        this.fileUpload(
+          "#upload-plan-file-" + 2 + "-" + i,
+          this.callback(file.Imagefile, "/pfantua/public/backend/api/uploadImage/activityHistoryVideo")
+        );
+      });
+    },
   },
 };
 </script>

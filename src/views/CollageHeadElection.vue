@@ -47,13 +47,12 @@
               </div>
               <div class="form-group">
                 <label>院長遴選年分</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  required
-                  placeholder=""
-                  maxlength="10"
-                  v-model="collageHeadElection.Year"/>
+                <el-date-picker
+                  v-model="collageHeadElection.Year"
+                  type="year"
+                  placeholder="Pick a Year"
+                  value-format='yyyy'
+                />
               </div>
               <div class="form-group">
                 <label>院長遴選簡介</label>
@@ -130,7 +129,7 @@ import $ from "jquery";
 export default {
   data() {
     return {
-      MAX_FILE_SIZE: 4 * 1000 * 1000,
+      MAX_FILE_SIZE: 10 * 1000 * 1000,
       list:[],
       FileList: [],
       IsNew: true,
@@ -138,6 +137,7 @@ export default {
       collageHeadElection: {
         Title: "",
         Content: "",
+        Year: "",
         IsActive: true,
       },
       docfile: {
@@ -188,7 +188,6 @@ export default {
         await this.$api.createCollageHeadElection(this.collageHeadElection);
       } else {
         await this.$api.updateCollageHeadElection(this.$route.params.id, this.collageHeadElection);
-        console.log(this.collageHeadElection);
       }
       alert("儲存完成", () => {
         this.$router.push(`/collageHeadElections`);
@@ -249,7 +248,7 @@ export default {
 
       if (!file) return
       if (file.size > this.MAX_FILE_SIZE) {
-        alert('文件大小不能超過4MB');
+        alert('文件大小不能超過10MB');
         return;
       }
       this.uploadDragFile(file, 

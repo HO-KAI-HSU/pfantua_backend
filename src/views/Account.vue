@@ -206,6 +206,162 @@
                   <label class="form-check-label">權限管理</label>
                 </div>
               </div>
+              <div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="radio2"
+                    @change="rbRoleAllChanged"
+                    value="Banner"
+                    v-model="currentRole.Functions"
+                  />
+                  <label class="form-check-label">Banner管理</label>
+                </div>
+              </div>
+              <div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="radio2"
+                    @change="rbRoleAllChanged"
+                    value="News"
+                    v-model="currentRole.Functions"
+                  />
+                  <label class="form-check-label">最新消息管理</label>
+                </div>
+              </div>
+              <div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="radio2"
+                    @change="rbRoleAllChanged"
+                    value="CollageInfo"
+                    v-model="currentRole.Functions"
+                  />
+                  <label class="form-check-label">關於本院管理</label>
+                </div>
+              </div>
+              <div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="radio2"
+                    @change="rbRoleAllChanged"
+                    value="CollageColleague"
+                    v-model="currentRole.Functions"
+                  />
+                  <label class="form-check-label">師資陣容管理</label>
+                </div>
+              </div>
+              <div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="radio2"
+                    @change="rbRoleAllChanged"
+                    value="CollageColleague"
+                    v-model="currentRole.Functions"
+                  />
+                  <label class="form-check-label">師資陣容管理</label>
+                </div>
+              </div>
+              <div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="radio2"
+                    @change="rbRoleAllChanged"
+                    value="CollageDepartment"
+                    v-model="currentRole.Functions"
+                  />
+                  <label class="form-check-label">系所單位管理</label>
+                </div>
+              </div>
+              <div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="radio2"
+                    @change="rbRoleAllChanged"
+                    value="CollageCourse"
+                    v-model="currentRole.Functions"
+                  />
+                  <label class="form-check-label">學院課程管理</label>
+                </div>
+              </div>
+              <div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="radio2"
+                    @change="rbRoleAllChanged"
+                    value="ActivityHistory"
+                    v-model="currentRole.Functions"
+                  />
+                  <label class="form-check-label">活動集錦管理</label>
+                </div>
+              </div>
+              <div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="radio2"
+                    @change="rbRoleAllChanged"
+                    value="Regulation"
+                    v-model="currentRole.Functions"
+                  />
+                  <label class="form-check-label">法規章程管理</label>
+                </div>
+              </div>
+              <div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="radio2"
+                    @change="rbRoleAllChanged"
+                    value="RelatedResource"
+                    v-model="currentRole.Functions"
+                  />
+                  <label class="form-check-label">相關資源管理</label>
+                </div>
+              </div> 
+              <div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="radio2"
+                    @change="rbRoleAllChanged"
+                    value="CollageHeadElection"
+                    v-model="currentRole.Functions"
+                  />
+                  <label class="form-check-label">院長遴選管理</label>
+                </div>
+              </div> 
+              <div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="radio2"
+                    @change="rbRoleAllChanged"
+                    value="SystemLog"
+                    v-model="currentRole.Functions"
+                  />
+                  <label class="form-check-label">系統紀錄管理</label>
+                </div>
+              </div> 
               <!--TODO 2023-12-10 Hidden-->
               <!-- <div>
                 <div class="form-check">
@@ -220,7 +376,7 @@
                   <label class="form-check-label">文章管理</label>
                 </div>
               </div> -->
-              <div>
+              <!-- <div>
                 <div class="form-check">
                   <input
                     class="form-check-input"
@@ -245,7 +401,7 @@
                   />
                   <label class="form-check-label">課程管理</label>
                 </div>
-              </div>
+              </div> -->
               <!--TODO 2023-12-10 Hidden-->
               <!-- <div>
                 <div class="form-check">
@@ -286,7 +442,7 @@
                   <label class="form-check-label">品牌管理</label>
                 </div>
               </div> -->
-              <div>
+              <!-- <div>
                 <div class="form-check">
                   <input
                     class="form-check-input"
@@ -298,7 +454,7 @@
                   />
                   <label class="form-check-label">廣告管理</label>
                 </div>
-              </div>
+              </div> -->
               <!--TODO 2023-12-10 Hidden-->
               <!-- <div>
                 <div class="form-check">
@@ -326,7 +482,7 @@
                   <label class="form-check-label">折價券管理</label>
                 </div>
               </div> -->
-              <div>
+              <!-- <div>
                 <div class="form-check">
                   <input
                     class="form-check-input"
@@ -351,7 +507,7 @@
                   />
                   <label class="form-check-label">會員資料修改</label>
                 </div>
-              </div>
+              </div> -->
               <!--TODO 2023-12-10 Hidden-->
               <!-- <div>
                 <div class="form-check">
@@ -431,7 +587,7 @@
                   <label class="form-check-label">營業據點管理</label>
                 </div>
               </div> -->
-              <div>
+              <!-- <div>
                 <div class="form-check">
                   <input
                     class="form-check-input"
@@ -456,7 +612,7 @@
                   />
                   <label class="form-check-label">系統設定</label>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
@@ -508,7 +664,7 @@
             v-model="currentAccount.Name"
           />
         </div>
-        <div class="form-group">
+        <!-- <div class="form-group">
           <label>信箱</label>
           <input
             type="text"
@@ -516,7 +672,7 @@
             placeholder="信箱"
             v-model="currentAccount.Email"
           />
-        </div>
+        </div> -->
         <div class="form-group">
           <label>所屬群組</label>
           <select class="form-control" v-model="currentAccount.RoleID" v-if="currentAccount.RoleID < 2">
@@ -540,7 +696,7 @@
                   type="radio"
                   name="radio1"
                   :value="true"
-                  v-model="currentAccount.Active"
+                  v-model="currentAccount.IsActive"
                 />
                 <label class="form-check-label">啟用</label>
               </div>
@@ -552,7 +708,7 @@
                   type="radio"
                   name="radio1"
                   :value="false"
-                  v-model="currentAccount.Active"
+                  v-model="currentAccount.IsActive"
                 />
                 <label class="form-check-label">停用</label>
               </div>
@@ -653,11 +809,10 @@ export default {
           },
         },
         {
-          title: "狀態",
-          data: "Active",
-
-          render: function (data) {
-            if (data) {
+          title: "啟用狀態",
+          data: "IsActive",
+          render: function (data, type, row, meta) {
+            if (data == "1") {
               return '<span class="badge badge-success">啟用</span>';
             }
             return '<span class="badge badge-danger">停用</span>';
@@ -695,6 +850,7 @@ export default {
           Enable: true,
           Functions: [],
         };
+        this.currentRole.Enable = this.currentRole.Enable == "1" ? true : false;
         this.$bvModal.show("mlRole");
       } else {
         this.mlAccountTitle = "新增帳號";
@@ -703,8 +859,9 @@ export default {
           Name: "",
           Password: "",
           RoleID: "",
-          Active: true,
+          IsActive: true,
         };
+        this.currentAccount.IsActive = this.currentAccount.IsActive == "1" ? true : false;
         this.$bvModal.show("mlAccount");
       }
     },
@@ -716,6 +873,7 @@ export default {
         }
       });
       this.currentRole.Functions = this.currentRole.Function.split(",");
+      this.currentRole.Enable = this.currentRole.Enable == "1" ? true : false;
       this.$bvModal.show("mlRole");
     },
     async deleteRole(id) {
@@ -738,6 +896,7 @@ export default {
       }
 
       this.currentRole.Function = this.currentRole.Functions.join(",");
+      this.currentRole.Enable = this.currentRole.Enable ? "1" : "0";
       try {
         if (this.currentRole.RoleID) {
           await this.$api.updateRole(this.currentRole.RoleID, this.currentRole);
@@ -758,6 +917,7 @@ export default {
           this.currentAccount = r;
         }
       });
+      this.currentAccount.IsActive = this.currentAccount.IsActive == "1" ? true : false;
       this.$bvModal.show("mlAccount");
     },
     async deleteAccount(id) {
@@ -780,6 +940,7 @@ export default {
         return;
       }
       try {
+        this.currentAccount.IsActive = this.currentAccount.IsActive ? "1" : "0";
         if (this.currentAccount.UserID) {
           await this.$api.updateAccount(this.currentAccount.UserID, this.currentAccount);
         } else {

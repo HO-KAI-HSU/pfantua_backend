@@ -61,12 +61,12 @@
               </div>
               <div class="form-group">
                 <label>最新消息發布時間</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  required
-                  maxlength="100"
-                  v-model="news.NewsTime"/>
+                <el-date-picker
+                  v-model="news.NewsTime"
+                  type="year"
+                  placeholder="Pick a Data"
+                  value-format='yyyy-MM-dd'
+                />
               </div>
               <div class="form-group">
                 <label>最新消息圖片上傳</label>
@@ -182,9 +182,9 @@ export default {
       this.news.IsActive = this.news.IsActive == "1" ? true : false;
       this.imagefile.Url = this.news.ImageUrl;
       this.imagefile.SrcFileName = this.news.ImageUrl;
-      this.Title = "編輯最新消息內容";
+      this.Title = "編輯最新消息";
     } else {
-      this.Title = "新增最新消息內容";
+      this.Title = "新增最新消息";
     }
 
     this.$nextTick(() => {

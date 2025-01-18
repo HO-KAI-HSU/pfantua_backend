@@ -100,6 +100,11 @@ const routes = [
     name: 'News',
     component: () => import('../views/News.vue')
   },
+  {
+    path: '/systemLogs',
+    name: 'SystemLogList',
+    component: () => import('../views/SystemLogList.vue')
+  },
 ]
 
 const router = new VueRouter({

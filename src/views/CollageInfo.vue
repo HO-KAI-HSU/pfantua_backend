@@ -5,7 +5,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">學院內容管理</h1>
+            <h1 class="m-0 text-dark">關於本院內容管理</h1>
           </div>
           <!-- /.col -->
           <div class="col-sm-6">
@@ -13,7 +13,7 @@
               <li class="breadcrumb-item">
                 <router-link to="/">首頁</router-link>
               </li>
-              <li class="breadcrumb-item active">學院內容管理</li>
+              <li class="breadcrumb-item active">關於本院管理</li>
             </ol>
           </div>
           <!-- /.col -->
@@ -81,7 +81,7 @@
                   v-ckeditor="CollageInfo.Collage.CollageIntroduction"/>
               </div>
               <div class="form-group">
-                <label>學院歷史</label>
+                <label>學院沿革</label>
                 <textarea
                   rows="8"
                   class="form-control"
@@ -206,7 +206,7 @@ export default {
     window.model = this;
     this.CollageColleagues = await this.$api.getCollageColleagues();
     this.CollageInfo = await this.$api.getCollageInfo();
-    this.Title = "編輯學院內容";
+    this.Title = "編輯關於學院";
     this.imagefile.Url = this.CollageInfo.Collage.CollageImageUrl;
     this.imagefile.SrcFileName = this.CollageInfo.Collage.CollageImageUrl;
 
